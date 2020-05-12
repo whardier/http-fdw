@@ -52,6 +52,11 @@ from multicorn.utils import WARNING
 from multicorn.utils import log_to_postgres
 
 
+def json_isoformat_hack(o):
+    if isinstance(o, datetime):
+        return o.isoformat()
+
+
 def true_or_false(bool_str):
     if bool_str == "true":
         return True
@@ -66,7 +71,7 @@ def post(url, body, body_type, encoding):
         data = urlencode(body).encode(encoding)
         headers["Content-Type"] = "application/x-www-form-urlencoded"
     elif body_type == "json":
-        data = json.dumps(body).encode(encoding)
+        data = json.dumps(body, default=json_isoformat_hack).encode(encoding)
         headers["Content-Type"] = "application/json"
 
     request = Request(url=url, data=data, headers=headers, method="POST")
