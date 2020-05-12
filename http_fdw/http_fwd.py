@@ -115,7 +115,7 @@ class HttpFDW(ForeignDataWrapper):
 
         self.encoding = fdw_options.get("encoding", "utf-8")
 
-        data_as_query = fdw_options.get("data_as_query", "true")
+        data_as_query = fdw_options.get("data_as_query", "false")
         self.data_as_query = true_or_false(data_as_query)
 
         self.fdw_options = fdw_options
